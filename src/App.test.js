@@ -4,13 +4,12 @@ import { App } from './App';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
-
 test('renders the app, with a button, a quote and a image', () => {
     render(<App />);
 
     const buttonEl = screen.getByRole('button');
     const imageEl = screen.getByRole('img');
-    const textEl = screen.getByText(/Speaker/);
+    const textEl = screen.getByText(/loading speaker/);
 
     expect(buttonEl).toBeInTheDocument;
     expect(imageEl).toBeInTheDocument;
@@ -44,4 +43,12 @@ test('calls api on button click and update its text', async () => {
 
     expect(quoteEl).toBeInTheDocument;
 
+})
+
+test('calls api on startup and renders it response', async () => {
+    render(<App />);
+
+    const quoteEl = await screen.findByText(response.quote)
+
+    expect(quoteEl).toBeInTheDocument;
 })
